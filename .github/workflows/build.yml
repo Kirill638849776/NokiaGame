@@ -11,31 +11,32 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install JDK 8
+      - name: Install tools
         run: |
           sudo apt-get update
-          sudo apt-get install -y openjdk-8-jdk
-          export JAVA_HOME=/usr/lib/jvm/java-8-openjdk-amd64
-          export PATH=$JAVA_HOME/bin:$PATH
-          echo "JAVA_HOME=$JAVA_HOME" >> $GITHUB_ENV
-          echo "$JAVA_HOME/bin" >> $GITHUB_PATH
+          sudo apt-get install -y unzip wget openjdk-8-jdk
           java -version
           javac -version
 
-      - name: Build J2ME API jar
+      - name: Download WTK 2.5.2
         run: |
-          mkdir -p j2me-api/build
-          javac -d j2me-api/build $(find j2me-api/src -name "*.java")
-          cd j2me-api/build
-          jar cf ../j2me-api.jar .
-          cd $GITHUB_WORKSPACE
+          wget -O wtk.zip https://download.oracle.com/otn/java/javame/sdk/WTK2.5.2_01-linux.zip --no-check-certificate --quiet
+          unzip wtk.zip -d wtk
+
+      - name: Extract real CLDC/MIDP API
+        run: |
+          mkdir -p api
+          cp wtk/WTK2.5.2/lib/cldcapi11.jar api/
+          cp wtk/WTK2.5.2/lib/midpapi20.jar api/
 
       - name: Compile game
         run: |
           mkdir -p build/classes
           javac -source 1.3 -target 1.3 \
-            -bootclasspath j2me-api/j2me-api.jar \
-            -d build/classes *.java
+            -bootclasspath api/cldcapi11.jar:api/midpapi20.jar \
+            -classpath api/midpapi20.jar \
+            -d build/classes \
+            *.java
 
       - name: Build JAR
         run: |
