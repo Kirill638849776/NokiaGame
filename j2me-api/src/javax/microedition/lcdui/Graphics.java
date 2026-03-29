@@ -10,11 +10,21 @@ public class Graphics {
     public static final int BOTTOM = 32;
     public static final int BASELINE = 64;
 
-    public void setColor(int rgb) {}
-    public void setColor(int r, int g, int b) {}
+    public void setColor(int rgb) {
+    }
 
-    public void fillRect(int x, int y, int w, int h) {}
-    public void drawRect(int x, int y, int w, int h) {}
+    public void setColor(int r, int g, int b) {
+    }
 
-    public void drawString(String str, int x, int y, int anchor) {}
+    public void fillRect(int x, int y, int w, int h) {
+    }
+
+    public void drawRect(int x, int y, int w, int h) {
+    }
+
+    public void drawString(String str, int x, int y, int anchor) {
+    }
+
+    public void setFont(Font f) {
+    }
 }
