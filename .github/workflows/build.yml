@@ -22,31 +22,26 @@ jobs:
           java -version
           javac -version
 
-      - name: Install Java ME SDK
+      - name: Build J2ME API jar
         run: |
-          sudo apt-get install -y libxml2-utils unzip wget
-          wget https://download.oracle.com/otn/java/javame/sdk/8.3/b01/me-sdk-8.3-linux-x64.deb -O me-sdk.deb
-          sudo dpkg -i me-sdk.deb || sudo apt-get -f install -y
+          mkdir -p j2me-api/build
+          javac -d j2me-api/build $(find j2me-api/src -name "*.java")
+          cd j2me-api/build
+          jar cf ../j2me-api.jar .
+          cd $GITHUB_WORKSPACE
 
-      - name: Compile Java
+      - name: Compile game
         run: |
           mkdir -p build/classes
           javac -source 1.3 -target 1.3 \
-            -bootclasspath /opt/Java_ME_SDK_8.3/lib/cldc_1.1.jar:/opt/Java_ME_SDK_8.3/lib/midp_2.0.jar \
+            -bootclasspath j2me-api/j2me-api.jar \
             -d build/classes *.java
-
-      - name: Preverify
-        run: |
-          mkdir -p build/preverified
-          /opt/Java_ME_SDK_8.3/bin/preverify \
-            -classpath /opt/Java_ME_SDK_8.3/lib/cldc_1.1.jar:/opt/Java_ME_SDK_8.3/lib/midp_2.0.jar \
-            -d build/preverified build/classes
 
       - name: Build JAR
         run: |
           mkdir -p build/jar
-          cp manifest.mf build/preverified/
-          jar cfm build/jar/NokiaGame.jar manifest.mf -C build/preverified .
+          cp manifest.mf build/classes/
+          jar cfm build/jar/NokiaGame.jar manifest.mf -C build/classes .
 
       - name: Upload JAR
         uses: actions/upload-artifact@v4
