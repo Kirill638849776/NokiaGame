@@ -9,13 +9,13 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Install J2ME tools
         run: |
           sudo apt-get update
           sudo apt-get install -y default-jdk unzip wget
-          wget https://downloads.sourceforge.net/project/j2me-wtk/WTK2.5.2_01-linux.zip
+          wget https://github.com/kyuubiran/j2me-wtk-mirror/releases/download/WTK2.5.2_01/WTK2.5.2_01-linux.zip
           unzip WTK2.5.2_01-linux.zip -d $HOME/wtk
 
       - name: Compile Java
@@ -43,4 +43,3 @@ jobs:
         with:
           name: NokiaGame
           path: build/jar/NokiaGame.jar
-
