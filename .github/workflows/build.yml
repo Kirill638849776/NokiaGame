@@ -18,12 +18,10 @@ jobs:
           java -version
           javac -version
 
-      - name: Compile game
+      - name: Compile game (no bootclasspath)
         run: |
           mkdir -p build/classes
-          javac -source 1.3 -target 1.3 \
-            -bootclasspath wtk-lib/cldcapi11.jar:wtk-lib/midpapi20.jar \
-            -classpath wtk-lib/midpapi20.jar \
+          javac \
             -d build/classes \
             *.java
 
