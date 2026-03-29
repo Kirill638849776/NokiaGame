@@ -39,7 +39,8 @@ jobs:
           jar cfm build/jar/NokiaGame.jar manifest.mf -C build/preverified .
 
       - name: Upload JAR
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: NokiaGame
           path: build/jar/NokiaGame.jar
+
