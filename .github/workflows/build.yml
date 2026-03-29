@@ -11,10 +11,12 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install Java
+      - name: Install JDK 8
         run: |
           sudo apt-get update
-          sudo apt-get install -y default-jdk
+          sudo apt-get install -y openjdk-8-jdk
+          java -version
+          javac -version
 
       - name: Download J2ME APIs (MicroEmulator)
         run: |
@@ -39,4 +41,3 @@ jobs:
         with:
           name: NokiaGame
           path: build/jar/NokiaGame.jar
-
