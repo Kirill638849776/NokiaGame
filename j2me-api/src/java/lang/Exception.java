@@ -1,6 +1,12 @@
 package java.lang;
 
-public class Exception {
-    public Exception() {}
-    public Exception(String msg) {}
+public class Exception extends Throwable {
+
+    public Exception() {
+        super();
+    }
+
+    public Exception(String msg) {
+        super(msg);
+    }
 }
