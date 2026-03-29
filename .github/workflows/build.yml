@@ -18,9 +18,9 @@ jobs:
           java -version
           javac -version
 
-      - name: Download WTK 2.5.2
+      - name: Download WTK 2.5.2 from mirror
         run: |
-          wget -O wtk.zip https://download.oracle.com/otn/java/javame/sdk/WTK2.5.2_01-linux.zip --no-check-certificate --quiet
+          wget -O wtk.zip https://archive.org/download/WTK2.5.2_01/WTK2.5.2_01-linux.zip
           unzip wtk.zip -d wtk
 
       - name: Extract real CLDC/MIDP API
