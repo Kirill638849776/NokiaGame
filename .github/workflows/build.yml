@@ -11,23 +11,18 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v4
 
-      - name: Install tools
+      - name: Install Java ME SDK 3.0
         run: |
           sudo apt-get update
           sudo apt-get install -y unzip wget openjdk-8-jdk
-          java -version
-          javac -version
+          wget -O jmesdk.zip https://archive.org/download/java-me-sdk-3.0-linux/java_me_sdk-3_0-linux-bin-b06-20_oct_2009.zip
+          unzip jmesdk.zip -d jmesdk
 
-      - name: Download WTK 2.5.2 from mirror
-        run: |
-          wget -O wtk.zip https://archive.org/download/WTK2.5.2_01/WTK2.5.2_01-linux.zip
-          unzip wtk.zip -d wtk
-
-      - name: Extract real CLDC/MIDP API
+      - name: Extract CLDC/MIDP API
         run: |
           mkdir -p api
-          cp wtk/WTK2.5.2/lib/cldcapi11.jar api/
-          cp wtk/WTK2.5.2/lib/midpapi20.jar api/
+          cp jmesdk/java_me_sdk-3_0/lib/cldc_1.1.jar api/cldcapi11.jar
+          cp jmesdk/java_me_sdk-3_0/lib/midp_2.0.jar api/midpapi20.jar
 
       - name: Compile game
         run: |
