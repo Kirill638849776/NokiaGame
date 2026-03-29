@@ -1,0 +1,6 @@
+MIDlet-Name: NokiaGame
+MIDlet-Version: 1.0
+MIDlet-Vendor: Kirill
+MIDlet-1: NokiaGame, , MainMidlet
+MicroEdition-Configuration: CLDC-1.1
+MicroEdition-Profile: MIDP-2.0
